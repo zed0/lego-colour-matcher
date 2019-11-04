@@ -1,29 +1,49 @@
 $(document).ready(() => {
-	$('#search').on('click', () => {
-		const input = $('#input').val();
-		try {
-			const closest = searchForColour(input);
-			$('#results').empty();
-			for(const result of closest) {
-				$('#results').append(`
-					<li class="list-group-item result">
-						<div class="swatch" style="background-color: #${result.rgb}"></div>
-						<a href="https://rebrickable.com/colors/${result.id}">${result.name} (#${result.rgb})</a>
-					</li>
-				`);
-			}
-		}
-		catch(err)
-		{
-			$('#results').empty();
-			$('#results').append(`
-				<li class="list-group-item error">${err}</li>
-			`);
-		}
+	const debouncedUpdate = _.debounce(update, 500);
+
+	$('#input').on('input', (event) => {
+		const input = $(event.currentTarget).val();
+		debouncedUpdate(input, false);
+	});
+
+	$('#input').on('change', (event) => {
+		const input = $(event.currentTarget).val();
+		debouncedUpdate.cancel();
+		debouncedUpdate(input, true);
+		debouncedUpdate.flush();
 	});
 });
 
+function update(input, showError) {
+	try {
+		const closest = searchForColour(input, showError);
+		$('#results').empty();
+		for(const result of closest) {
+			$('#results').append(`
+				<li class="list-group-item result">
+					<div class="swatch" style="background-color: #${result.rgb}"></div>
+					<a href="https://rebrickable.com/colors/${result.id}">${result.name} (#${result.rgb})</a>
+				</li>
+			`);
+		}
+	}
+	catch(err)
+	{
+		if(!showError)
+			return;
+
+		$('#results').empty();
+		$('#results').append(`
+			<li class="list-group-item error">${err}</li>
+		`);
+	}
+}
+
 function searchForColour(colour) {
+	colour = _.trim(colour);
+	if(colour === '')
+		return [];
+
 	let rgb;
 	try {
 		rgb = parseColour(colour);
