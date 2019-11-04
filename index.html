@@ -2,19 +2,42 @@
 
 <html lang="en">
 	<head>
+		<!-- Required meta tags -->
 		<meta charset="utf-8">
-
-		<title>Lego colour matcher</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta name="description" content="Lego colour matcher">
 		<meta name="author" content="zed0">
 
+		<title>Lego colour matcher</title>
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<link rel="stylesheet" href="styles.css">
 	</head>
 
 	<body>
-		<input type="text" id="input" placeholder="colour e.g. red, #00FF00, rgb(0,0,255)">
-		<button type="button" id="search">Go!</button>
-		<div id="results">
+		<div class="search-image-background embed-responsive embed-responsive-16by9">
+			<div class="search-area">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-auto">
+							<div class="input-group">
+								<input type="text" id="input" placeholder="#FF0000, red, etc." class="form-control">
+								<div class="input-group-append">
+									<button type="button" id="search" class="btn btn-light btn-outline-secondary">
+										Go!
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mt-4 justify-content-center">
+						<div class="col-auto">
+							<ul class="list-group" id="results">
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>

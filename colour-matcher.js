@@ -6,7 +6,7 @@ $(document).ready(() => {
 			$('#results').empty();
 			for(const result of closest) {
 				$('#results').append(`
-					<li>
+					<li class="list-group-item result">
 						<div class="swatch" style="background-color: #${result.rgb}"></div>
 						<a href="https://rebrickable.com/colors/${result.id}">${result.name} (#${result.rgb})</a>
 					</li>
@@ -17,7 +17,7 @@ $(document).ready(() => {
 		{
 			$('#results').empty();
 			$('#results').append(`
-				<span class="error">${err}</div>
+				<li class="list-group-item error">${err}</li>
 			`);
 		}
 	});

@@ -1,7 +1,39 @@
+.search-image-background {
+	background-image: url('lego-rainbow.jpg');
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+.embed-responsive {
+	overflow: visible;
+}
+
+.search-area {
+	position: absolute;
+	top: calc(50% - 15px);
+	width: 100%;
+}
+
 .swatch {
-	width: 16px;
-	height: 16px;
 	display: inline-block;
+	width: 3rem;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	border-right: 1px solid rgb(223, 223, 223);
+}
+
+.list-group-item.result {
+	padding-left: 3.5rem;
+}
+
+.list-group-item:first-child .swatch {
+	border-top-left-radius: .25rem;
+}
+
+.list-group-item:last-child .swatch {
+	border-bottom-left-radius: .25rem;
 }
 
 .error {
