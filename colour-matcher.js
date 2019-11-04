@@ -20,10 +20,13 @@ function update(input, showError) {
 		$('#results').empty();
 		for(const result of closest) {
 			$('#results').append(`
-				<li class="list-group-item result">
+				<a
+					class="list-group-item result"
+					href="https://rebrickable.com/colors/${result.id}"
+				>
 					<div class="swatch" style="background-color: #${result.rgb}"></div>
-					<a href="https://rebrickable.com/colors/${result.id}">${result.name} (#${result.rgb})</a>
-				</li>
+					${result.name} (#${result.rgb})
+				</a>
 			`);
 		}
 	}
