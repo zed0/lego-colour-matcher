@@ -1,5 +1,5 @@
 .search-image-background {
-	background-image: url('lego-rainbow.jpg');
+	background-image: url('lego-rainbow-downsized.jpg');
 	background-size: 100%;
 	background-repeat: no-repeat;
 }
@@ -10,7 +10,7 @@
 
 .search-area {
 	position: absolute;
-	top: calc(50% - 15px);
+	top: calc(50% - 19px);
 	width: 100%;
 }
 
