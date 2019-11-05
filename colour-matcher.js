@@ -1,5 +1,19 @@
+const ignore = {
+	transparent: false,
+	chrome: false,
+	speckle: false,
+	modulex: true,
+};
+
 $(document).ready(() => {
 	const debouncedUpdate = _.debounce(update, 500);
+
+	const updateImmediate = (showErrors) => {
+		const input = $('#input').val();
+		debouncedUpdate.cancel();
+		debouncedUpdate(input, showErrors);
+		debouncedUpdate.flush();
+	}
 
 	$('#input').on('input', (event) => {
 		const input = $(event.currentTarget).val();
@@ -7,11 +21,17 @@ $(document).ready(() => {
 	});
 
 	$('#input').on('change', (event) => {
-		const input = $(event.currentTarget).val();
-		debouncedUpdate.cancel();
-		debouncedUpdate(input, true);
-		debouncedUpdate.flush();
+		updateImmediate(true);
 	});
+
+	for(const attribute of ['transparent', 'chrome', 'speckle', 'modulex'])
+	{
+		$(`#ignore-${attribute}`).on('click', (event) => {
+			ignore[attribute] = !ignore[attribute];
+			$(`#ignore-${attribute} .fa-menu-item`).toggleClass('fa-check fa-close');
+			updateImmediate(false);
+		});
+	}
 });
 
 function update(input, showError) {
@@ -61,6 +81,10 @@ function searchForColour(colour) {
 	}
 
 	return _(legoColours)
+		.filter(listColour => ignore.transparent ? !listColour.is_trans : true)
+		.filter(listColour => ignore.chrome ? !listColour.name.startsWith('Chrome') : true)
+		.filter(listColour => ignore.speckle ? !listColour.name.startsWith('Speckle') : true)
+		.filter(listColour => ignore.modulex ? !listColour.name.startsWith('Modulex') : true)
 		.orderBy(listColour => compareListColour(rgb, listColour))
 		.take(10)
 		.value();

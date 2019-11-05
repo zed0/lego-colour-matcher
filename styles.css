@@ -39,3 +39,18 @@
 .error {
 	color: red;
 }
+
+.menu {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	right: 0;
+}
+
+.text-extra-muted {
+	color: rgb(0, 0, 0, 0.2);
+}
+
+.fa-menu-item {
+	margin-left: -1.28571429em;
+}
