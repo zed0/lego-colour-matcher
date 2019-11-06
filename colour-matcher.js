@@ -1,8 +1,8 @@
-const ignore = {
-	transparent: false,
-	chrome: false,
-	speckle: false,
-	modulex: true,
+const settings = {
+	'ignore-transparent': false,
+	'ignore-chrome': false,
+	'ignore-speckle': false,
+	'ignore-modulex': true,
 };
 
 $(document).ready(() => {
@@ -24,11 +24,10 @@ $(document).ready(() => {
 		updateImmediate(true);
 	});
 
-	for(const attribute of ['transparent', 'chrome', 'speckle', 'modulex'])
-	{
-		$(`#ignore-${attribute}`).on('click', (event) => {
-			ignore[attribute] = !ignore[attribute];
-			$(`#ignore-${attribute} .fa-menu-item`).toggleClass('fa-check fa-close');
+	for(const setting in settings) {
+		$(`#${setting}`).on('click', (event) => {
+			settings[setting] = !settings[setting];
+			$(`#${setting} .fa-menu-item`).toggleClass('fa-check fa-close');
 			updateImmediate(false);
 		});
 	}
@@ -81,10 +80,10 @@ function searchForColour(colour) {
 	}
 
 	return _(legoColours)
-		.filter(listColour => ignore.transparent ? !listColour.is_trans : true)
-		.filter(listColour => ignore.chrome ? !listColour.name.startsWith('Chrome') : true)
-		.filter(listColour => ignore.speckle ? !listColour.name.startsWith('Speckle') : true)
-		.filter(listColour => ignore.modulex ? !listColour.name.startsWith('Modulex') : true)
+		.filter(listColour => settings['ignore-transparent'] ? !listColour.is_trans : true)
+		.filter(listColour => settings['ignore-chrome'] ? !listColour.name.startsWith('Chrome') : true)
+		.filter(listColour => settings['ignore-speckle'] ? !listColour.name.startsWith('Speckle') : true)
+		.filter(listColour => settings['ignore-modulex'] ? !listColour.name.startsWith('Modulex') : true)
 		.orderBy(listColour => compareListColour(rgb, listColour))
 		.take(10)
 		.value();
