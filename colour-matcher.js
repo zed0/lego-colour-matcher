@@ -3,6 +3,7 @@ const settings = {
 	'ignore-chrome': false,
 	'ignore-speckle': false,
 	'ignore-modulex': true,
+	'use-cie': true,
 };
 
 $(document).ready(() => {
@@ -95,11 +96,19 @@ function compareListColour(rgb, listColour) {
 }
 
 function colourDistance(a, b) {
-	return Math.sqrt(
-		Math.pow(a.red   - b.red,   2) +
-		Math.pow(a.green - b.green, 2) +
-		Math.pow(a.blue  - b.blue,  2)
-	);
+	if(settings['use-cie']) {
+		return deltaE(
+			rgb2lab([a.red, a.green, a.blue]),
+			rgb2lab([b.red, b.green, b.blue])
+		);
+	}
+	else {
+		return Math.sqrt(
+			Math.pow(a.red   - b.red,   2) +
+			Math.pow(a.green - b.green, 2) +
+			Math.pow(a.blue  - b.blue,  2)
+		);
+	}
 }
 
 function parseColour(input) {
