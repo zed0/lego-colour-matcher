@@ -32,6 +32,8 @@ $(document).ready(() => {
 			updateImmediate(false);
 		});
 	}
+
+	updateImmediate(false);
 });
 
 function update(input, showError) {
