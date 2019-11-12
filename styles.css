@@ -14,6 +14,11 @@
 	width: 100%;
 }
 
+#input-swatch {
+	width: 38px;
+	background-color: white;
+}
+
 .swatch {
 	display: inline-block;
 	width: 3rem;

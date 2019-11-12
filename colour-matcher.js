@@ -38,7 +38,10 @@ $(document).ready(() => {
 
 function update(input, showError) {
 	try {
-		const closest = searchForColour(input, showError);
+		const rgb = inputRgb(input);
+		$('#input-swatch').css('background-color', `rgb(${rgb.red}, ${rgb.green}, ${rgb.blue})`);
+
+		const closest = searchForColour(rgb, showError);
 		$('#results').empty();
 		for(const result of closest) {
 			$('#results').append(`
@@ -54,20 +57,22 @@ function update(input, showError) {
 	}
 	catch(err)
 	{
+		$('#input-swatch').css('background-color', '');
+		$('#results').empty();
+
 		if(!showError)
 			return;
 
-		$('#results').empty();
 		$('#results').append(`
 			<li class="list-group-item error">${err}</li>
 		`);
 	}
 }
 
-function searchForColour(colour) {
+function inputRgb(colour) {
 	colour = _.trim(colour);
 	if(colour === '')
-		return [];
+		throw new Error('No input');
 
 	let rgb;
 	try {
@@ -81,7 +86,10 @@ function searchForColour(colour) {
 			throw err;
 		}
 	}
+	return rgb;
+}
 
+function searchForColour(rgb) {
 	return _(legoColours)
 		.filter(listColour => settings['ignore-transparent'] ? !listColour.is_trans : true)
 		.filter(listColour => settings['ignore-chrome'] ? !listColour.name.startsWith('Chrome') : true)
